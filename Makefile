@@ -1,3 +1,3 @@
 run:
-	g++ -g bai08.cpp -o bai08
-	./bai08
+	g++ -g bai13.cpp -o bin/bai13
+	./bin/bai13
