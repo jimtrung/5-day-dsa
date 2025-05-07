@@ -2,35 +2,30 @@
 #include <string>
 using namespace std;
 
-struct HocVien {
+struct HangHoa {
     int id;
-    string name, lop, chuyenNganh;
-    float grade;
+    string name, nsx;
+    float cost;  
 };
 
-typedef HocVien Data;
+typedef HangHoa Data;
 
 Data setData() {
     Data d;
-    cout << "Nhap ma hoc vien: "; cin >> d.id;
-    cout << "Nhap ten hoc vien: "; cin.ignore(); getline(cin, d.name);
-    cout << "Nhap lop hoc vien: "; getline(cin, d.lop);
+    cout << "Nhap ma hang hoa: "; cin >> d.id;
+    cout << "Nhap ten hang: "; cin.ignore(); getline(cin, d.name);
+    cout << "Nhap nha san xuat: "; getline(cin, d.nsx);
 
     do {
-        cout << "Nhap chuyen nganh (TMDT/QTANM/KHMT): "; 
-        getline(cin, d.chuyenNganh); 
-    } while (d.chuyenNganh != "TMDT" && d.chuyenNganh != "QTANM" && d.chuyenNganh != "KHMT");
-
-    do {
-        cout << "Nhap diem tong ket: ";
-        cin >> d.grade;
-    } while (d.grade < 0 || d.grade > 10);
+        cout << "Nhap gia (trieu dong): ";
+        cin >> d.cost;
+    } while (d.cost < 0);
 
     return d;
 }
 
 void getData(Data d) {
-    cout << d.id << " | " << d.name << " | " << d.lop << " | " << d.chuyenNganh << " | " << d.grade << endl;
+    cout << d.id << " | " << d.name << " | " << d.nsx << " | " << d.cost << endl;
 }
 
 struct Node {
@@ -59,7 +54,7 @@ Node* insert(Node* root, Data value) {
     if (root == NULL) {
         return createNewNode(value);
     }
-    if (root->data.grade > value.grade) { 
+    if (root->data.cost > value.cost) {
         root->left = insert(root->left, value);
     } else {
         root->right = insert(root->right, value);
@@ -95,9 +90,9 @@ void postOrderTraversal(Node* root) {
 }
 
 Node* search(Node* root, string target) {
-    if (root == NULL || root->data.chuyenNganh == target) {
+    if (root == NULL || root->data.nsx == target) {
         return root;
-    } else if (root->data.chuyenNganh > target) {
+    } else if (root->data.nsx > target) {
         return search(root->left, target);
     } else {
         return search(root->right, target);
@@ -108,7 +103,7 @@ void cau3(Node* root) {
     if (root == NULL) {
         return;
     }
-    if (root->data.grade >= 8) {
+    if (root->data.cost >= 10) {
         getData(root->data);
     }
     cau3(root->left);
@@ -121,26 +116,26 @@ int main() {
     
     int N;
     do {
-        cout << "Nhap so luong hoc vien: ";
+        cout << "Nhap so luong hang hoa: ";
         cin >> N;
     } while (N <= 0);
     
     for (int i = 1; i <= N; i++) {
-        cout << "Nhap thong tin hoc vien thu " << i << endl;
+        cout << "Nhap thong tin hang hoa thu " << i << endl;
         Data d = setData();
         tree.root = insert(tree.root, d);
         cout << endl;
     }
     
-    cout << "Thong tin cac hoc vien vua nhap la:" << endl;
+    cout << "Thong tin cac hang hoa vua nhap la:" << endl;
     inOrderTraversal(tree.root);
     cout << endl;
     
-    cout << "Nhung hoc vien co diem tong ket lon hon 8.0 la:" << endl;
+    cout << "Nhung hang hoa gia lon hon bang 10 trieu la:" << endl;
     cau3(tree.root);
     cout << endl;
     
-    if (search(tree.root, "TMDT") == NULL) {
+    if (search(tree.root, "SamSung") == NULL) {
         cout << "NO" << endl;
     } else {
         cout << "YES" << endl;
