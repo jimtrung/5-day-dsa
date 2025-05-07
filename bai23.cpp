@@ -31,48 +31,38 @@ Node* createNewNode(Data value) {
     return newNode;
 }
 
-struct Queue {
+struct Stack {
     Node* head;
-    Node* tail;
 };
 
-void newQueue(Queue &q) {
-    q.head = q.tail = NULL;
+void newStack(Stack &s) {
+    s.head = NULL; 
 }
 
-bool isEmpty(Queue q) {
-    return q.head == NULL;
+bool isEmpty(Stack s) {
+    return s.head == NULL;
 }
 
-void enqueue(Queue &q, Data value) {
+void push(Stack &s, Data value) {
     Node* newNode = createNewNode(value);
-    if (isEmpty(q)) {
-        q.head = q.tail = newNode;
-    } else {
-        q.tail->next = newNode;
-        q.tail = newNode;
-    }
+    newNode->next = s.head;
+    s.head = newNode;
 }
 
-void dequeue(Queue &q, Data &d) {
-    if (isEmpty(q)) {
-        cout << "Hang doi rong" << endl; 
+void pop(Stack &s, Data &d) {
+    if (isEmpty(s)) {
+        cout << "Ngan xep rong" << endl;
         return;
     }
-    d = q.head->data;
-    if (q.head->next == NULL) {
-        delete q.head;
-        q.head = q.tail = NULL;
-        return;
-    }
-    Node* curr = q.head;
-    q.head = q.head->next;
+    d = s.head->data;
+    Node* curr = s.head;
+    s.head = s.head->next;
     delete curr;
 }
 
 int main() {
-    Queue q;
-    newQueue(q);
+    Stack s;
+    newStack(s);
     
     int N;
     do {
@@ -83,15 +73,15 @@ int main() {
     for (int i = 1; i <= N; i++) {
         cout << "Nhap thong tin phan so thu " << i << endl;
         Data d = setData();
-        enqueue(q, d);
+        push(s, d);
         cout << endl;
     }
     
     float tong = 0;
-    cout << "Cac phan so trong hang doi la:" << endl;
-    while (!isEmpty(q)) {
+    cout << "Cac phan so trong ngan xep la:" << endl; 
+    while (!isEmpty(s)) {
         Data d;
-        dequeue(q, d);
+        pop(s, d);
         getData(d);
         cout << " ";
         tong += float(d.tuSo) / d.mauSo;

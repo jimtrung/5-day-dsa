@@ -2,21 +2,21 @@
 #include <iomanip>
 using namespace std;
 
-struct PhanSo {
-    int tuSo, mauSo;
+struct SoPhuc {
+    int thuc, ao;
 };
 
-typedef PhanSo Data;
+typedef SoPhuc Data;
 
 Data setData() {
     Data d;
-    cout << "Nhap tu so: "; cin >> d.tuSo;
-    cout << "Nhap mau so: "; cin >> d.mauSo;
+    cout << "Nhap phan thuc: "; cin >> d.thuc;
+    cout << "Nhap phan ao: "; cin >> d.ao; 
     return d;
 }
 
 void getData(Data d) {
-    cout << d.tuSo << "/" << d.mauSo;
+    cout << d.thuc << " + " << d.ao << "i";
 }
 
 struct Node {
@@ -76,30 +76,32 @@ int main() {
     
     int N;
     do {
-        cout << "Nhap so luong phan so: ";
+        cout << "Nhap so luong so phuc: ";
         cin >> N;
     } while (N <= 0);
     
     for (int i = 1; i <= N; i++) {
-        cout << "Nhap thong tin phan so thu " << i << endl;
+        cout << "Nhap thong tin so phuc thu " << i << endl;
         Data d = setData();
         enqueue(q, d);
         cout << endl;
     }
     
-    float tong = 0;
-    cout << "Cac phan so trong hang doi la:" << endl;
+    int tongThuc = 0, tongAo = 0;
+    cout << "Cac so phuc trong hang doi la:" << endl;
     while (!isEmpty(q)) {
         Data d;
         dequeue(q, d);
         getData(d);
-        cout << " ";
-        tong += float(d.tuSo) / d.mauSo;
+        cout << "\n";
+        tongThuc += d.thuc;
+        tongAo += d.ao;
     }
-    cout << endl << endl;
+    cout << endl;
     
     cout << setprecision(2) << fixed 
-         << "Tong cua cac phan so la: " << tong << endl;
+         << "Tong cua cac so phuc la: " 
+         << tongThuc << " + " << tongAo << "i" << endl; 
     
     return 0;
 }
