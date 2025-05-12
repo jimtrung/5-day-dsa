@@ -1,6 +1,6 @@
 run:
-	g++ -g bai39.cpp -o bin/bai39
-	./bin/bai39
+	g++ -g bai40.cpp -o bin/bai40
+	./bin/bai40
 
 CPP_FILES := $(shell find . -name "*.cpp")
 
